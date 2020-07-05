@@ -1,26 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
-import { Card, Form, Input, Button, Row, Col } from "antd";
+import { Card, Form, Input, Button, List } from "antd";
 
 function NewTodo() {
+  const [toDoList, setToDoList] = useState([]);
+
+  const onSubmit = (values) => {
+    const newList = [...toDoList, values.newToDo];
+    setToDoList(newList);
+  };
+
+  const [form] = Form.useForm();
   return (
     <Card size="default" title="New To Do Item">
-      <Form name="basic">
-        <Row gutter={[24, 8]}>
-          <Col span={16}>
-            <Form.Item label="Item" name="newToDo">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Col>
-        </Row>
+      <Form form={form} name="newToDo" onFinish={onSubmit}>
+        <Form.Item
+          label="Item"
+          name="newToDo"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
+      <List
+        dataSource={toDoList}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+      ></List>
     </Card>
   );
 }
