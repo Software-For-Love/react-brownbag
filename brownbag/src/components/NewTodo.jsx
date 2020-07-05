@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import "../App.css";
 import { Card, Form, Input, Button, List } from "antd";
+import { CloseOutlined } from '@ant-design/icons';
+
 
 function NewTodo() {
   const [toDoList, setToDoList] = useState([]);
-
   const onSubmit = (values) => {
-    const newList = [...toDoList, values.newToDo];
+    const newList = [...toDoList, values.Todo];
     setToDoList(newList);
   };
 
+  const onDelete = (id) => {
+    const newList = toDoList.filter(item => item !== id)
+    setToDoList(newList)
+  }
+
   const [form] = Form.useForm();
   return (
-    <Card size="default" title="New To Do Item">
-      <Form form={form} name="newToDo" onFinish={onSubmit}>
+    <Card size="default" title="To Do List">
+      <Form form={form} name="Todo" onFinish={onSubmit}>
         <Form.Item
           label="Item"
-          name="newToDo"
+          name="Todo"
           rules={[
             {
               required: true,
@@ -34,7 +40,7 @@ function NewTodo() {
       </Form>
       <List
         dataSource={toDoList}
-        renderItem={(item) => <List.Item>{item}</List.Item>}
+        renderItem={(item) => <List.Item><Card extra={<a onClick={() => {onDelete(item)}}><CloseOutlined /></a>} style={{ width: 600 }} title={`To do Item`}>{item}</Card></List.Item>}
       ></List>
     </Card>
   );
