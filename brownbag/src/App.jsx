@@ -1,7 +1,8 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { StepBackwardOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         >
           Learn React
         </a>
-        <StepBackwardOutlined />
+        <HomeOutlined />
+        <Button type="primary">Button</Button>
       </header>
     </div>
   );
